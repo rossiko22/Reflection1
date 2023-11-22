@@ -1,0 +1,35 @@
+import java.lang.reflect.Method;
+
+public class Test {
+    private String src;
+
+    public Test() {
+        this.src = "Programming languages";
+    }
+
+    public void method1() {
+        System.out.println(this.src);
+    }
+
+    public void method2(int n) {
+        System.out.println(n);
+    }
+
+    private void method3() {
+        System.out.println("Private method is invoked");
+    }
+
+    public static void main(String[] args) {
+        Test test = new Test();
+        test.method1();
+        test.method2(10);
+        test.method3();
+
+        System.out.println("The name of the class is " + test.getClass().getSimpleName());
+        System.out.println("The name of the constructor is " + test.getClass().getDeclaredConstructors()[0].getName());
+        System.out.println("The public methods of class are:");
+        for (Method method : test.getClass().getMethods()) {
+            System.out.println("Method name: " + method.getName());
+        }
+    }
+}
