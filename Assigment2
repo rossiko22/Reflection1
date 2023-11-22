@@ -1,0 +1,52 @@
+import java.lang.reflect.Method;
+
+public class Test {
+    private String s;
+
+    public Test() {
+        this.s = "Programming languages";
+    }
+
+    public void method1() {
+        System.out.println(this.s);
+    }
+
+    public void method2(int n) {
+        System.out.println(n);
+    }
+
+    private void method3() {
+        System.out.println("Private method is invoked");
+    }
+
+    public static void main(String[] args) {
+        Test test = new Test();
+        test.method1();
+        test.method2(15);
+        test.method3();
+
+        printClassInfo(test);
+    }
+
+    private static void printClassInfo(Object obj) {
+        try {
+            Method method1 = obj.getClass().getMethod("method1");
+            method1.invoke(obj);
+
+            Method method2 = obj.getClass().getMethod("method2", int.class);
+            method2.invoke(obj, 15);
+
+            Field field = obj.getClass().getDeclaredField("s");
+            field.setAccessible(true);
+            System.out.println("Printing the value of s: " + field.get(obj));
+            field.set(obj, "The value of string in JAVA");
+            System.out.println("Print the changed value of s: " + field.get(obj));
+
+            Method method3 = obj.getClass().getDeclaredMethod("method3");
+            method3.setAccessible(true);
+            method3.invoke(obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
